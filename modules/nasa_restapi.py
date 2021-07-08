@@ -21,9 +21,9 @@ class NasaRestApi:
                   "success": response.ok}
         return result
 
-    def GetEarthImagery(self, filterDict=None):
+    def GetEarthImagery(self, params=None):
         """"""
-        return self.Request("Get", [NC.PLANET_CATEGORY, NC.EARTH], NC.imagery, params=filterDict)
+        return self.Request("Get", [NC.PLANET_CATEGORY, NC.EARTH], NC.imagery, params=params)
 
     def __GetUrl(self, categories, endPointName):
         """"""
