@@ -1,4 +1,5 @@
 import random
+from datetime import date
 
 def positive_test_data():
     """"""
@@ -38,10 +39,18 @@ def negative_test_data():
             ]
 
 def Latitude(start=-90, stop=90):
-    return round(random.uniform(start, stop+1), 6)
+    return round(random.uniform(start, stop), 6)
 
 def Longitude(start=-180, stop=180):
-     return round(random.uniform(start, stop+1), 6)
+     return round(random.uniform(start, stop), 6)
 
 def Dim(start=0.00000000001, stop=82):
-        return random.uniform(start, stop+1)
+        return random.uniform(start, stop)
+
+def GenDate():
+    """"""
+    resultDate = date.today()
+
+    year = random.randint(2014, resultDate.year)
+    month = random.randint(1, 12)
+    return resultDate.strftime("%Y-%m-%d")
