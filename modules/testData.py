@@ -34,6 +34,7 @@ def negative_test_data():
             {"lon": Longitude(), "lat": Latitude(), "date": "2014-02-01", "dim": "badstr"},
             {"lon": Longitude(), "lat": Latitude(), "date": "2014-02-01", "cloud_score": True},
             {"lon": 100.75, "lat": 1.5, "date": "2014-02-01", "dim": Dim(83, 100)},
+            {"lon": 100.75, "lat": 1.5, "date": "2014-02-01", "dim": Dim(-10, 0)},
             ]
 
 def Latitude(start=-90, stop=90):
