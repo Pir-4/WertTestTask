@@ -12,7 +12,8 @@ class NasaRestApi:
         """"""
         mainUrl = self.__GetUrl(categories, endPointName)
         params = params or {}
-        params["api_key"] = self.api_key
+        if self.api_key:
+            params["api_key"] = self.api_key
 
         response = self.requests[rtype.upper()](mainUrl, params)
         result = {"status_code": response.status_code,
