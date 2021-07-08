@@ -1,14 +1,30 @@
 import pytest
 import os
 
-from modules import nasa_restapi
+from modules import nasa_restapi, testData
 
-ApiKey = os.environ["ApiKey"]
+Nasa_Api = None
 
-def test_earth_get_positive():
+@pytest.fixture(scope="module", autouse=True)
+def initialized_nasa_rstapi():
+    """Connect to db before testing, disconnect after."""
+    global Nasa_Api
+    Nasa_Api = nasa_restapi.NasaRestApi(os.environ["ApiKey"])
+    yield
+
+@pytest.mark.parametrize('params', testData.positive_test_data())
+def test_earth_get_positive(params):
     """"""
-    nasa_api = nasa_restapi.NasaRestApi(ApiKey)
-    #result = nasa_api.GetEarthImagery({"lon": 100.75,"lat": 1.5, "date": "2014-02-01"})
-    result = nasa_api.GetEarthImagery()
+    result = Nasa_Api.GetEarthImagery(params)
+    #assert result["success"]
+    assert result["status_code"] == 200
+    #TODO check the text is image
 
-    assert True
+
+@pytest.mark.parametrize('params', testData.negative_test_data())
+def test_earth_get_negative(params):
+    """"""
+    result = Nasa_Api.GetEarthImagery(params)
+    assert not result["success"]
+    assert result["status_code"] != 200
+    #TODO check the text is not image
