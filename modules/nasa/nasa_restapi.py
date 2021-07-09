@@ -1,5 +1,6 @@
 import requests
-from modules import nasa_costants as NC
+from modules.nasa import nasa_costants as NC
+
 
 class NasaRestApi:
     """ Implement NSA Rest API"""
