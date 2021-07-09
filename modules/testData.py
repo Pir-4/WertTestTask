@@ -1,11 +1,11 @@
 import random
-from datetime import date
+from datetime import datetime, timedelta
 
 def positive_test_data():
     """"""
     return [
-            {"lon": 100.75, "lat": 1.5, "date": "2014-02-01", "dim": 1.025},
-            {"lon": Longitude(), "lat": Latitude()},
+            {"lon": 100.75, "lat": 1.5, "date": "2014-02-01", "dim": 1.025},#example
+            {"lon": gen_lon(), "lat": gen_lat()},
             {"lon": 0, "lat": 0},
             {"lon": 0, "lat": 90},
             {"lon": 0, "lat": -90},
@@ -15,42 +15,56 @@ def positive_test_data():
             {"lon": -180, "lat": -90},
             {"lon": 180, "lat": 90},
             {"lon": 180, "lat": -90},
-            {"lon":  Longitude(), "lat": Latitude(), "date": "2014-02-01"},
-            {"lon":  Longitude(), "lat": Latitude(), "date": "2014-02-01", "dim": Dim()},
-            {"lon":  Longitude(), "lat": Latitude(), "dim": Dim()},
-            {"lon": Longitude(), "lat": Latitude(), "date": "2014-02-01", "cloud_score": False},
+            {"lon":  gen_lon(), "lat": gen_lat(), "date": gen_date()},
+            {"lon":  gen_lon(), "lat": gen_lat(), "dim": gen_dim()},
+            {"lon":  gen_lon(), "lat": gen_lat(), "date": gen_date(), "dim": gen_dim()},
+            {"lon": gen_lon(), "lat": gen_lat(), "date": gen_date(), "cloud_score": False},
             ]
 
 def negative_test_data():
     """"""
-    return [{"lon": Longitude()},
-            {"lat": Latitude()},
-            {"lon": -181, "lat": Latitude()},
-            {"lon": 181, "lat": Latitude()},
-            {"lon": Longitude(), "lat": 91},
-            {"lon": Longitude(), "lat": -91},
-            {"lon": "badstr", "lat": Latitude(), "date": "2014-02-01"},
-            {"lon": Longitude(), "lat": "badstr", "date": "2014-02-01"},
-            {"lon": Longitude(), "lat": Latitude(), "date": "badstr"},
-            {"lon": Longitude(), "lat": Latitude(), "date": "2014-02-01", "dim": "badstr"},
-            {"lon": Longitude(), "lat": Latitude(), "date": "2014-02-01", "cloud_score": True},
-            {"lon": 100.75, "lat": 1.5, "date": "2014-02-01", "dim": Dim(83, 100)},
-            {"lon": 100.75, "lat": 1.5, "date": "2014-02-01", "dim": Dim(-10, 0)},
+    return [{"lon": gen_lon()},
+            {"lat": gen_lat()},
+            {"lon": -181, "lat": gen_lat()},
+            {"lon": 181, "lat": gen_lat()},
+            {"lon": gen_lon(), "lat": 91},
+            {"lon": gen_lon(), "lat": -91},
+            {"lon": "badstr", "lat": gen_lat(), "date": gen_date()},
+            {"lon": gen_lon(), "lat": "badstr", "date": gen_date()},
+            {"lon": gen_lon(), "lat": gen_lat(), "date": "badstr"},
+            {"lon": gen_lon(), "lat": gen_lat(), "date": gen_date(), "dim": "badstr"},
+            {"lon": gen_lon(), "lat": gen_lat(), "date": gen_date(), "cloud_score": True},
+            {"lon": 100.75, "lat": 1.5, "date": gen_date(), "dim": gen_dim(83, 100)},
+            {"lon": 100.75, "lat": 1.5, "date": gen_date(), "dim": gen_dim(-10, 0)},
+            {"lon": gen_lon(), "lat": gen_lat(), "date": "1970-01-01"},
+            {"lon": gen_lon(), "lat": gen_lat(), "date": gen_date("more")},
+            {"lon": gen_lon(), "lat": gen_lat(), "date": gen_date("less")},
             ]
 
-def Latitude(start=-90, stop=90):
+def gen_lat(start=-90, stop=90):
+    """"""
     return round(random.uniform(start, stop), 6)
 
-def Longitude(start=-180, stop=180):
-     return round(random.uniform(start, stop), 6)
-
-def Dim(start=0.00000000001, stop=82):
-        return random.uniform(start, stop)
-
-def GenDate():
+def gen_lon(start=-180, stop=180):
     """"""
-    resultDate = date.today()
+    return round(random.uniform(start, stop), 6)
 
-    year = random.randint(2014, resultDate.year)
-    month = random.randint(1, 12)
-    return resultDate.strftime("%Y-%m-%d")
+def gen_dim(start=0.00000000001, stop=82):
+    """"""
+    return random.uniform(start, stop)
+
+def gen_date(mode="normal"):
+    """"""
+    end_date = datetime.now()
+    start_date = datetime(2014, 1, 1)
+    if mode == "more":
+        start_date = end_date + timedelta(days=1)
+        end_date = end_date + timedelta(days=365)
+    elif mode == "less":
+        end_date = end_date - timedelta(days=1)
+        start_date = datetime(1900, 1, 1)
+
+    time_between_dates = end_date - start_date
+    random_number_of_days = random.randrange(time_between_dates.days)
+    random_date = start_date + timedelta(days=random_number_of_days)
+    return random_date.strftime("%Y-%m-%d")
