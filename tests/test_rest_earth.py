@@ -35,3 +35,5 @@ def test_earth_get_without_apiKey(params):
     nasa_api = nasa_restapi.NasaRestApi(api_key=None)
     result = nasa_api.GetEarthImagery(params)
     assert not result["success"] and result["status_code"] == HTTPStatus.FORBIDDEN
+
+#TODO tests for verifying an image: dim, date in metadata
