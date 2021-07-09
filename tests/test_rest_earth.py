@@ -13,7 +13,7 @@ def initialized_nasa_rest_obj():
     NASA_API = nasa_restapi.NasaRestApi(os.environ["ApiKey"])
     yield
 
-@pytest.mark.parametrize('params', testData.positive_earth_get_test_data())
+@pytest.mark.parametrize('params', testData.positive_earth_imagery_get_test_data())
 def test_earth_get_positive(params):
     """Verify planetary/earth with right parameters"""
     result = NASA_API.GetEarthImagery(params)
@@ -21,7 +21,7 @@ def test_earth_get_positive(params):
     #TODO check the text is image
 
 
-@pytest.mark.parametrize('params', testData.negative_earth_get_test_data())
+@pytest.mark.parametrize('params', testData.negative_earth_imageryget_test_data())
 def test_earth_get_negative(params):
     """Verify planetary/earth with negative parameters"""
     result = NASA_API.GetEarthImagery(params)
@@ -29,11 +29,11 @@ def test_earth_get_negative(params):
     #TODO check the text is not image
 
 
-@pytest.mark.parametrize('params', testData.positive_earth_get_test_data())
+@pytest.mark.parametrize('params', testData.positive_earth_imagery_get_test_data())
 def test_earth_get_without_apiKey(params):
     """Verify planetary/earth request without api key"""
     nasa_api = nasa_restapi.NasaRestApi(api_key=None)
     result = nasa_api.GetEarthImagery(params)
     assert not result["success"] and result["status_code"] == HTTPStatus.FORBIDDEN
 
-#TODO tests for verifying an image: dim, date in metadata
+#TODO tests for verifying an image depends from dim, date in metadata

@@ -1,7 +1,7 @@
 import random
 from datetime import datetime, timedelta
 
-def positive_earth_get_test_data():
+def positive_earth_imagery_get_test_data():
     """ Generate params for earth GET request
 
     :return: list of dict with earth get params
@@ -25,7 +25,7 @@ def positive_earth_get_test_data():
             {"lon": gen_lon(), "lat": gen_lat(), "date": gen_date(), "cloud_score": False},
             ]
 
-def negative_earth_get_test_data():
+def negative_earth_imageryget_test_data():
     """ Generate negative params for earth GET request
 
     :return: list of dict with earth get params
