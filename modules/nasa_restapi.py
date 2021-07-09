@@ -45,7 +45,7 @@ class NasaRestApi:
         :return: request result: status_code, reason, text, success
         :rtype: dict
         """
-        return self.Request("GET", [NC.PLANET_CATEGORY, NC.EARTH, NC.imagery], params=params)
+        return self.Request("GET", [NC.PLANET_CATEGORY, NC.EARTH, NC.IMAGERY], params=params)
 
     def __GetUrl(self, url_parts, main_url=NC.MAIN_URL):
         """ Get final URL
