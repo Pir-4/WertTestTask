@@ -2,7 +2,7 @@ import pytest
 import os
 from http import HTTPStatus
 
-from modules import nasa_restapi, testData
+from modules import nasa_restapi, testData, test_functions as tf
 
 NASA_API = None #global value
 
@@ -18,7 +18,7 @@ def test_earth_get_positive(params):
     """Verify planetary/earth with right parameters"""
     result = NASA_API.GetEarthImagery(params)
     assert result["status_code"] == HTTPStatus.OK
-    #TODO check the text is image
+    assert tf.is_Image(result["text"])
 
 
 @pytest.mark.parametrize('params', testData.negative_earth_get_test_data())
