@@ -2,7 +2,8 @@ import pytest
 import os
 from http import HTTPStatus
 
-from modules import nasa_restapi, testData, test_functions as tf
+from modules import testData, test_functions as tf
+from modules.nasa import nasa_restapi
 
 NASA_API = None #global value
 

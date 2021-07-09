@@ -47,6 +47,7 @@ def negative_earth_get_test_data():
             {"lon": gen_lon(), "lat": gen_lat(), "date": "1970-01-01"},
             {"lon": gen_lon(), "lat": gen_lat(), "date": gen_date("more")},
             {"lon": gen_lon(), "lat": gen_lat(), "date": gen_date("less")},
+            {"lon": 100.75, "lat": 1.5, "date": gen_date(dateformat="%Y-%d-%m"), "dim": 1.025}
             ]
 
 def gen_lat(start=-90, stop=90):
@@ -85,7 +86,7 @@ def gen_dim(start=0.00000000001, stop=82):
     """
     return random.uniform(start, stop)
 
-def gen_date(mode="normal"):
+def gen_date(mode="normal", dateformat="%Y-%m-%d"):
     """ Generate date string line "2014-01-01"
 
     :param mode: mode of generating random date
@@ -93,6 +94,8 @@ def gen_date(mode="normal"):
                  more - between tomorrow and next year
                  less - between "1900-01-01" and "2013-12-31"
     :type mode: str
+    :param dateformat: output format date
+    :type dateformat: str
     :return: str of date format like "%Y-%m-%d"
     :rtype: str
     """
@@ -108,4 +111,4 @@ def gen_date(mode="normal"):
     time_between_dates = end_date - start_date
     random_number_of_days = random.randrange(time_between_dates.days)
     random_date = start_date + timedelta(days=random_number_of_days)
-    return random_date.strftime("%Y-%m-%d")
+    return random_date.strftime(dateformat)
