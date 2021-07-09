@@ -5,27 +5,22 @@ from http import HTTPStatus
 from modules import testData
 from modules.nasa import nasa_restapi
 
-NASA_API = None #global value
-
-@pytest.fixture(scope="module", autouse=True)
-def initialized_nasa_rest_obj():
-    """initialize nasa api class"""
-    global NASA_API
-    NASA_API = nasa_restapi.NasaRestApi(os.environ["ApiKey"])
-    yield
+@pytest.fixture
+def get_nasa_api():
+    return nasa_restapi.NasaRestApi(os.environ["ApiKey"])
 
 @pytest.mark.parametrize('params', testData.positive_earth_imagery_get_test_data())
-def test_earth_get_positive(params):
+def test_earth_get_positive(get_nasa_api, params):
     """Verify planetary/earth with right parameters"""
-    result = NASA_API.GetEarthImagery(params)
+    result = get_nasa_api.GetEarthImagery(params)
     assert result["status_code"] == HTTPStatus.OK
     #TODO check the text is image
 
 
 @pytest.mark.parametrize('params', testData.negative_earth_imageryget_test_data())
-def test_earth_get_negative(params):
+def test_earth_get_negative(get_nasa_api, params):
     """Verify planetary/earth with negative parameters"""
-    result = NASA_API.GetEarthImagery(params)
+    result = get_nasa_api.GetEarthImagery(params)
     assert not result["success"] and result["status_code"] != HTTPStatus.OK
     #TODO check the text is not image
 
