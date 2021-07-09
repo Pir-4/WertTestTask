@@ -1,8 +1,12 @@
 import random
 from datetime import datetime, timedelta
 
-def positive_test_data():
-    """"""
+def positive_earth_get_test_data():
+    """ Generate params for earth GET request
+
+    :return: list of dict with earth get params
+    :rtype: list
+    """
     return [
             {"lon": 100.75, "lat": 1.5, "date": "2014-02-01", "dim": 1.025},#example
             {"lon": gen_lon(), "lat": gen_lat()},
@@ -21,8 +25,12 @@ def positive_test_data():
             {"lon": gen_lon(), "lat": gen_lat(), "date": gen_date(), "cloud_score": False},
             ]
 
-def negative_test_data():
-    """"""
+def negative_earth_get_test_data():
+    """ Generate negative params for earth GET request
+
+    :return: list of dict with earth get params
+    :rtype: list
+    """
     return [{"lon": gen_lon()},
             {"lat": gen_lat()},
             {"lon": -181, "lat": gen_lat()},
@@ -42,19 +50,52 @@ def negative_test_data():
             ]
 
 def gen_lat(start=-90, stop=90):
-    """"""
+    """ Generate Latitude
+
+    :param start: min limit of possible range
+    :type start: float
+    :param stop: max limit of possible range
+    :type stop: float
+    :return: random value from range
+    :rtype: float
+    """
     return round(random.uniform(start, stop), 6)
 
 def gen_lon(start=-180, stop=180):
-    """"""
+    """ Generate Longitude
+
+    :param start: min limit of possible range
+    :type start: float
+    :param stop: max limit of possible range
+    :type stop: float
+    :return: random value from range
+    :rtype: float
+    """
     return round(random.uniform(start, stop), 6)
 
 def gen_dim(start=0.00000000001, stop=82):
-    """"""
+    """ Generate width and height of image in degrees
+
+    :param start: min limit of possible range
+    :type start: float
+    :param stop: max limit of possible range
+    :type stop: float
+    :return: random value from range
+    :rtype: float
+    """
     return random.uniform(start, stop)
 
 def gen_date(mode="normal"):
-    """"""
+    """ Generate date string line "2014-01-01"
+
+    :param mode: mode of generating random date
+                 normal - between "2014-01-01" and current date
+                 more - between tomorrow and next year
+                 less - between "1900-01-01" and "2013-12-31"
+    :type mode: str
+    :return: str of date format like "%Y-%m-%d"
+    :rtype: str
+    """
     end_date = datetime.now()
     start_date = datetime(2014, 1, 1)
     if mode == "more":
